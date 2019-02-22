@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using StackExchange.Redis;
-using Web.Infrastructure;
+using Web.Infrastructure.Data;
 
 namespace web
 {
@@ -28,17 +23,11 @@ namespace web
         {
             services.AddCustomViewLocator();
 
-            services.Configure<AppSettings>(Configuration);
+            services.AddMediatR(GetType());
 
-            services.AddSingleton<ConnectionMultiplexer>(sp =>
-            {
-                var settings = sp.GetRequiredService<IOptions<AppSettings>>().Value;
-                var configuration = ConfigurationOptions.Parse(settings.ConnectionString, true);
+            services.AddDbContext<PinDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
-                configuration.ResolveDns = true;
-
-                return ConnectionMultiplexer.Connect(configuration);
-            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

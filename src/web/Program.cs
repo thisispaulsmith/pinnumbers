@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Web.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using Web.Infrastructure.Data;
 
 namespace web
 {
@@ -14,7 +17,15 @@ namespace web
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args)
+                .Build()
+                .MigrateDbContext<PinDataContext>((context, services) =>
+                {
+                    new SeedData()
+                        .SeedAsync(context)
+                        .Wait();
+                })
+                .Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

@@ -6,14 +6,16 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=44327
-      - ConnectionString=redis
+      - ConnectionStrings__Database=server=sql.data;Database=pinnumbers;User Id=sa;Password=Pass@word
     ports:
-      - "35139:80"
-      - "44327:443"
+      - "5001:80"
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
-  redis:
+  sql.data:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
     ports:
-      - "6379:6379"
+      - "5433:1433" 

@@ -1,0 +1,13 @@
+﻿@using Web.Features.Home
+
+@model Exists.Result
+
+<div class="row">
+    <div class="col">
+        <h1>Is the Pin in Use?</h1>
+        <p>The pin number @Model.Pin @(@Model.Exists ? "already exists" : "is unused")<p>
+
+        <a class="btn btn-primary" role="button" asp-controller="home"
+           asp-action="index">Generate</a>
+    </div>
+</div>

@@ -8,5 +8,5 @@ services:
       context: .
       dockerfile: src/web/Dockerfile
 
-  redis:
-    image: redis:alpine
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest

@@ -1,0 +1,32 @@
+﻿@using Web.Features.Home
+
+@model Index.Result;
+
+<div class="row">
+
+    <div class="col">
+        <h1>Pin Generator</h1>
+
+        <form asp-controller="Home" asp-action="Generate">
+            <div class="form-group">
+                <label for=""></label>
+                <input type="text" class="form-control" id="pin" placeholder="" asp-for="Pin" />
+                <small class="form-text text-muted">Pins can be generated until all combinations have been consumed. At which point you can reset all consumed pins.</small>
+            </div>
+            @if (!Model.PinsAvailable)
+            {
+                <button type="submit" class="btn btn-primary" disabled>No More Pins</button>
+                <button type="submit" class="btn btn-primary" asp-controller="home" asp-action="reset">Reset Pins</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary">Generate New Pin Number</button>
+                <button type="submit" class="btn btn-primary" disabled>Reset Pins</button>
+            }
+
+            <button type="submit" class="btn btn-primary" asp-controller="home" asp-action="exists">Check Pin</button>
+        </form>
+
+    </div>
+
+</div>
