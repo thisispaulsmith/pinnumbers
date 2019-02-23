@@ -37,7 +37,7 @@ namespace Web.Features.Home
                 return new Result()
                 {
                     Pin = query.Pin,
-                    Exists = await _context.PinNumbers.AnyAsync(p => p.Pin == query.Pin)
+                    Exists = await _context.PinNumbers.AnyAsync(p => p.Pin == query.Pin && p.Consumed == true)
                 };
             }
         }

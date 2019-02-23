@@ -1,8 +1,10 @@
-﻿using System;
+﻿using EFCore.BulkExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Web.Models;
 
 namespace Web.Infrastructure.Data
 {
@@ -12,6 +14,8 @@ namespace Web.Infrastructure.Data
         {
             if (!context.PinNumbers.Any())
             {
+                var list = new List<PinNumber>(9990);
+
                 for (int a = 0; a < 10; a++)
                 {
                     for (int b = 0; b < 10; b++)
@@ -24,18 +28,17 @@ namespace Web.Infrastructure.Data
 
                                 if (!Regex.IsMatch(pin, @"(\d)\1{3}"))
                                 {
-                                    context.PinNumbers.Add(new Models.PinNumber()
+                                    list.Add(new PinNumber()
                                     {
                                         Pin = pin
                                     });
-                                    
                                 }
                             }
                         }
                     }
                 }
 
-                await context.SaveChangesAsync();
+                await context.BulkInsertAsync(list);
             }
         }
     }
