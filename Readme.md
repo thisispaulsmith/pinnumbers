@@ -2,11 +2,12 @@
 
 ## Summary
 
-A crude solution generating 4 digit pin numbers ensuring no duplicates and no simple patters of 4 digits the same e.g. 1111 and 9999.
+A crude solution generating 4 digit pin numbers ensuring no duplicates and no simple pin numbers
+patters of all 4 digits being the same e.g. 1111 and 9999.
 
 ## Running the Application
 
-Ensuring Docker installed.
+Ensuring Docker is installed run...
 
 ```
 docker-compose up -d
